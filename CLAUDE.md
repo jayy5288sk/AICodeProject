@@ -20,6 +20,7 @@
 ## 상시 로드 (메 세션 적용)
 - @Docs\Claude\ClaudeCodeRules.md
 - @Docs\Claude\TechSpec.md
+- @Docs\Documentation\WorkFlowRules.md
 
 ## OnDemand 참조(매 세션 읽지 않음. 해당 작업을 할 때만 읽음)
 
