@@ -24,6 +24,9 @@
 
 ## OnDemand 참조(매 세션 읽지 않음. 해당 작업을 할 때만 읽음)
 
+### 이슈 작성 시
+- 이슈 등록 권유 및 작성 시 `/github-issue` 스킬을 호출한다.
+
 ### 소스 코드 작업 시
 - @\Docs\SourceCode\BasicCodeConvention.md
 - @\Docs\SourceCode\AntiCodeConvention.md

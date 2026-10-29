@@ -54,6 +54,7 @@ flowchart TD
 ## 1. Github Issue
 > 개발, 버그수정 유형에서만 진행한다.
 
+- 이 단계는 `/github-issue` 스킬로 수행한다.
 - 이슈로 등록할 필요가 있다고 판단되면, 사용자에게 이슈 작성을 **권유**한다.
 - 사용자가 이슈 작성을 명령하면, 실질적인 작성은 Claude가 수행한다.
 - 이슈 작성 규칙과 양식은 `Docs\Documentation\GitHub Issue Rule.md`, `Docs\Template\IssueTemplate.md`를 따른다.
