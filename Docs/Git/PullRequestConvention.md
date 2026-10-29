@@ -1,8 +1,8 @@
 # Pull Request
 
-작업한 브랜치를 `main-develop` 에 합치는 유일한 통로입니다. `main-develop` 에는 직접 push하지 않습니다.
-
-Phase 단위가 끝났다는 요청이 들어왔을 때만 `main-develop`에서 `main`으로의 병합이 가능하다 
+- 작업한 브랜치를 `main-develop` 에 합치는 유일한 통로이다. 
+- `main-develop` 에는 직접 push하지 않습니다.
+- Phase 단위가 끝났다는 요청이 들어왔을 때만 `main-develop`에서 `main`으로의 병합이 가능하다 
 
 ---
 ## 운영 방식
