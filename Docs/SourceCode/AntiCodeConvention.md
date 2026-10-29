@@ -1,4 +1,4 @@
-# 안티패턴
+# 안티패턴(피해야 할 사항)
 - Update()에서 매 프레임 GetComponent, Find, Camera.main 호출
 - 다량의 기능이 들어간 God Object 생성
 - 대량 오브젝트를 Instantiate/Destroy로 반복 생성·삭제 (오브젝트 풀링 안 함)
