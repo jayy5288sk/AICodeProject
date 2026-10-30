@@ -150,10 +150,11 @@ flowchart TD
 ---
 
 ## 7. PR
+- 이 단계는 `/github-pr` 스킬로 수행한다.
 - 사용자가 PR 생성을 명령하면 Claude가 작성한다.
 - PR 작성 규칙과 양식은 `Docs\Documentation\GitHub Pull Request Rule.md`, `Docs\Template\PullRequestTemplate.md`를 따른다.
   - base는 `main-develop`, compare는 작업 브랜치로 지정한다.
-  - 이슈의 `완료조건 (DoD)`를 `올리기 전 확인` 항목에 반영한다.
+  - 이슈의 `완료조건 (DoD)`를 PR 본문의 `완료조건 (DoD)` 섹션에 반영한다.
 
 ---
 

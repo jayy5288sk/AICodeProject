@@ -27,6 +27,9 @@
 ### 이슈 작성 시
 - 이슈 등록 권유 및 작성 시 `/github-issue` 스킬을 호출한다.
 
+### PR 작성 시
+- Pull Request 작성 및 등록 시 `/github-pr` 스킬을 호출한다.
+
 ### 소스 코드 작업 시
 - @\Docs\SourceCode\BasicCodeConvention.md
 - @\Docs\SourceCode\AntiCodeConvention.md
