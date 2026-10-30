@@ -30,10 +30,10 @@ flowchart TD
 | 3. 업무 수행 (업무 착수) | 사용자(브랜치 개설), Claude(작업) | `Docs\SourceCode\` 하위 문서 |
 | 4. 사용자 검수 | 사용자 | - |
 | 5. 문서 / 다이어그램 반영 | Claude | - |
-| 6. Commit / Push | 사용자 | `Docs\Template\CommitConvention.md` |
-| 7. PR | Claude (사용자 명령 시) | `Docs\Template\PullRequestConvention.md` |
-| 8. 병합, 브랜치 파기 | 리뷰어, 사용자 | `Docs\Template\PullRequestConvention.md` |
-| 9. Issue Close | 사용자 명령 시 Claude | `Docs\Template\PullRequestConvention.md` |
+| 6. Commit / Push | 사용자 | `Docs\Git\CommitConvention.md` |
+| 7. PR | Claude (사용자 명령 시) | `Docs\Git\PullRequestConvention.md` |
+| 8. 병합, 브랜치 파기 | 리뷰어, 사용자 | `Docs\Git\PullRequestConvention.md` |
+| 9. Issue Close | 사용자 명령 시 Claude | `Docs\Git\PullRequestConvention.md` |
 
 ### 공통 규칙
 - 단계는 **한 번에 하나씩** 진행한다. 여러 단계를 한 응답에 묶어서 제시하지 않는다.
@@ -144,14 +144,14 @@ flowchart TD
 
 ## 6. Commit / Push
 - Commit, Push는 **사용자가 직접** 수행한다. Claude는 Git 작업을 수행하지 않는다.
-- 커밋 메시지와 커밋 단위는 `Docs\Template\CommitConvention.md`를 따른다.
+- 커밋 메시지와 커밋 단위는 `Docs\Git\CommitConvention.md`를 따른다.
 - `main`, `main-develop` 브랜치에 직접 Commit, Push하지 않는다.
 
 ---
 
 ## 7. PR
 - 사용자가 PR 생성을 명령하면 Claude가 작성한다.
-- 작성 규칙은 `Docs\Template\PullRequestConvention.md`를 따른다.
+- 작성 규칙은 `Docs\Git\PullRequestConvention.md`를 따른다.
   - base는 `main-develop`, compare는 작업 브랜치로 지정한다.
   - 이슈의 `완료조건 (DoD)`를 `올리기 전 확인` 항목에 반영한다.
 
