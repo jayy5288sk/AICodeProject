@@ -31,9 +31,9 @@ flowchart TD
 | 4. 사용자 검수 | 사용자 | - |
 | 5. 문서 / 다이어그램 반영 | Claude | - |
 | 6. Commit / Push | 사용자 | `Docs\Git\CommitConvention.md` |
-| 7. PR | Claude (사용자 명령 시) | `Docs\Git\PullRequestConvention.md` |
-| 8. 병합, 브랜치 파기 | 리뷰어, 사용자 | `Docs\Git\PullRequestConvention.md` |
-| 9. Issue Close | 사용자 명령 시 Claude | `Docs\Git\PullRequestConvention.md` |
+| 7. PR | Claude (사용자 명령 시) | `Docs\Documentation\GitHub Pull Request Rule.md`, `Docs\Template\PullRequestTemplate.md` |
+| 8. 병합, 브랜치 파기 | 리뷰어, 사용자 | `Docs\Documentation\GitHub Pull Request Rule.md` |
+| 9. Issue Close | 사용자 명령 시 Claude | `Docs\Documentation\GitHub Pull Request Rule.md` |
 
 ### 공통 규칙
 - 단계는 **한 번에 하나씩** 진행한다. 여러 단계를 한 응답에 묶어서 제시하지 않는다.
@@ -151,7 +151,7 @@ flowchart TD
 
 ## 7. PR
 - 사용자가 PR 생성을 명령하면 Claude가 작성한다.
-- 작성 규칙은 `Docs\Git\PullRequestConvention.md`를 따른다.
+- PR 작성 규칙과 양식은 `Docs\Documentation\GitHub Pull Request Rule.md`, `Docs\Template\PullRequestTemplate.md`를 따른다.
   - base는 `main-develop`, compare는 작업 브랜치로 지정한다.
   - 이슈의 `완료조건 (DoD)`를 `올리기 전 확인` 항목에 반영한다.
 
