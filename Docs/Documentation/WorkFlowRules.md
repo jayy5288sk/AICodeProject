@@ -35,6 +35,11 @@ flowchart TD
 | 8. 병합, 브랜치 파기 | 리뷰어, 사용자 | `Docs\Template\PullRequestConvention.md` |
 | 9. Issue Close | 사용자 명령 시 Claude | `Docs\Template\PullRequestConvention.md` |
 
+### 공통 규칙
+- 단계는 **한 번에 하나씩** 진행한다. 여러 단계를 한 응답에 묶어서 제시하지 않는다.
+  - 예: 브리핑과 작업 결과를 함께 제시하거나, 검수 보고와 문서 반영안을 함께 제시하지 않는다.
+- 현재 단계의 종료 조건(사용자의 승인·명령)이 충족된 뒤에만 다음 단계를 제시한다.
+
 ---
 
 ## 0. 업무 유형 판별
