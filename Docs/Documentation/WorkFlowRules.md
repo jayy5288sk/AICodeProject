@@ -29,7 +29,7 @@ flowchart TD
 | 2. 브리핑 | Claude | `Docs\Claude\ClaudeCodeRules.md` |
 | 3. 업무 수행 (업무 착수) | 사용자(브랜치 개설), Claude(작업) | `Docs\SourceCode\` 하위 문서 |
 | 4. 사용자 검수 | 사용자 | - |
-| 5. 문서 / 다이어그램 반영 | Claude | - |
+| 5. 문서 / 다이어그램 반영 | Claude | `Docs\Documentation\Game Specification Document Rule.md`, `Docs\Template\ImplementDocTemplate.md` |
 | 6. Commit / Push | 사용자 | `Docs\Git\CommitConvention.md` |
 | 7. PR | Claude (사용자 명령 시) | `Docs\Documentation\GitHub Pull Request Rule.md`, `Docs\Template\PullRequestTemplate.md` |
 | 8. 병합, 브랜치 파기 | 리뷰어, 사용자 | `Docs\Documentation\GitHub Pull Request Rule.md` |
@@ -137,6 +137,10 @@ flowchart TD
 
 - 변경 사항이 기존 기술 문서·다이어그램의 내용과 달라졌다면 해당 문서를 갱신한다.
 - 새로운 기능으로 기술 문서가 필요하다면 사용자에게 작성을 권유한다.
+- 기술 문서의 작성 규칙과 양식은 `Docs\Documentation\Game Specification Document Rule.md`, `Docs\Template\ImplementDocTemplate.md`를 따른다.
+- 기술 문서는 `Docs\ImplementDocs\` 폴더에 누적하여 저장한다.
+- 기술 문서는 `6. Commit / Push` 전에 작성하여 구현과 같은 커밋에 포함한다.
+- 기능 구현 후에는 기존 기술 문서의 `Features 목록` 표와 다이어그램을 함께 갱신한다.
 - 문서의 수정·생성 역시 사용자의 승인 후 진행한다.
 - 반영할 문서가 없으면 "반영 대상 없음"으로 보고하고 다음 단계로 넘어간다.
 
