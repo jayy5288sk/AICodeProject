@@ -8,7 +8,7 @@
 - 목표: 조준 방향으로 회전하는 무기, 좌우 이동 시 위아래 뒤집힘 방지, 교체 가능한 스프라이트와 자동 정렬되는 총구 위치
 
 ## 3. F-05 무기 조준 및 반전
-- What : 이동 방향(임시 조준)의 XZ 각도로 Pivot을 회전하고, 왼쪽(x < 0)을 향하면 Graphic의 `localScale.y = -1`로 위아래를 바로 세움
+- What : 조준 방향(타겟이 있으면 타겟, 없으면 이동 방향, F-07 참조)의 XZ 각도로 Pivot을 회전하고, 왼쪽(x < 0)을 향하면 Graphic의 `localScale.y = -1`로 위아래를 바로 세움
 - Where: `Assets/Scripts/Player/PlayerWeapon.cs`, `Assets/New Scene.unity` (Player/WeaponPivot)
 - Tune : `_tiltAngle`
 
@@ -33,6 +33,3 @@
 | F-04 | 카메라 추적 | 비스듬한 탑다운 시점에서 플레이어 추적 | `Assets/Scripts/Camera/` |
 | F-05 | 무기 조준 및 반전 | 조준 방향 회전, 좌우 시 위아래 뒤집힘 방지 | `Assets/Scripts/Player/` |
 | F-06 | 무기 교체 및 총구 | 스프라이트 교체 시 총구 위치 자동 정렬 | `Assets/Scripts/Player/` |
-
-## TODO
-- 임시 조준(이동 방향)을 오토 타겟팅(가장 가까운 적 방향)으로 교체
