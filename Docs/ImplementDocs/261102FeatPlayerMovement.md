@@ -4,33 +4,40 @@
 - 일자: 2026-11-02 (월요일)
 
 ## 2. Core Contents
-- 구현 방향: InputAction(Move) → PlayerMovement → Rigidbody / MoveDirectionArrow, CameraFollow
-- 목표: WASD 이동과 이동 방향 표시(연두색 화살표, 1초 주기 페이드), 카메라 추적
+- 구현 방향: InputAction(TouchPress/TouchPosition) → FloatingJoystick → PlayerMovement ← InputAction(Move) → Rigidbody / PlayerAnimation, CameraFollow
+- 목표: 화면 어디든 터치하면 생기는 투명 가상 조이스틱으로 이동, WASD 보조 이동, Idle/Move 애니메이션과 좌우 반전, 카메라 추적
 
-## 3. F-01 플레이어 이동
-- What : WASD 입력을 Update에서 읽고 FixedUpdate에서 Rigidbody 속도로 이동
-- Where: `Assets/Scripts/Player/PlayerMovement.cs`, `Assets/Input/PlayerControls.inputactions`
+## 3. F-01 터치 가상 조이스틱
+- What : 누른 지점을 중심으로 드래그 방향(길이 0~1)을 계산, 손을 떼면 0
+- Where: `Assets/Scripts/Player/FloatingJoystick.cs`, `Assets/Input/PlayerControls.inputactions`
+- Tune : `_maxDragDistance`, `_deadZoneDistance`
+
+## 3. F-02 플레이어 이동
+- What : 조이스틱 입력(우선) 또는 WASD를 Update에서 읽고, FixedUpdate에서 Rigidbody 속도로 XZ 평면 이동
+- Where: `Assets/Scripts/Player/PlayerMovement.cs`
 - Tune : `_moveSpeed`
 
-## 3. F-02 이동 방향 화살표
-- What : 이동 중 월드 공간 화살표가 이동 방향을 가리키며 페이드 인/아웃, 정지 시 숨김
-- Where: `Assets/Scripts/Player/MoveDirectionArrow.cs`, `Assets/Sprites/Arrow.png`
-- Tune : `_arrowColor`, `_fadeCycleSeconds`, `_distanceFromPlayer`, `_heightFromGround`
+## 3. F-03 플레이어 애니메이션
+- What : `IsMoving` 값이 바뀔 때만 Animator 갱신, 오른쪽 이동 시 `flipX`
+- Where: `Assets/Scripts/Player/PlayerAnimation.cs`, `Assets/Animations/Player/`
+- Tune : 클립 frameRate(`Player_Idle.anim`, `Player_Move.anim`)
 
-## 3. F-03 카메라 추적
+## 3. F-04 카메라 추적
 - What : LateUpdate에서 대상 위치 + 오프셋으로 카메라 이동
 - Where: `Assets/Scripts/Camera/CameraFollow.cs`
 - Tune : `_offset`
 
 ## 4. 선택 이유
-- Rigidbody: 벽, 지형 충돌을 물리 엔진에 맡기기 위함
-- 월드 공간 화살표: 플레이어를 따라다니며 바닥에서 방향을 직관적으로 보여주기 위함
-- 페이드: 단순 켜짐/꺼짐보다 부드럽게 보이도록 하기 위함
-- 화살표는 PlayerMovement를 직접 참조(SerializeField): 참조 대상이 하나뿐이라 이벤트 구조 없이 단순하게 구성
+- XZ 평면 + Rigidbody(3D): 2.5D 장르에 맞추고 지형 충돌을 물리 엔진에 맡기기 위함
+- 투명 조이스틱(UI 없음): 화면을 가리지 않고 어디서든 조작하기 위함, `<Pointer>` 바인딩으로 에디터 마우스 테스트 가능
+- 조이스틱을 별도 컴포넌트로 분리: 입력 계산과 이동 처리를 나눠 단일 책임 유지
+- 원본 스프라이트가 왼쪽을 향하므로 오른쪽 이동 시 반전
+- 스프라이트를 카메라 각도(45°)만큼 기울임: 비스듬한 시점에서 납작해 보이지 않도록 하기 위함
 
 ## 5. Features 목록
 | ID   | 기능 | 사용처 | 핵심 위치 |
 |------|------|--------|-----------|
-| F-01 | 플레이어 이동 | WASD 입력으로 플레이어 이동 | `Assets/Scripts/Player/` |
-| F-02 | 이동 방향 화살표 | 이동 중 플레이어 진행 방향 시각화 | `Assets/Scripts/Player/` |
-| F-03 | 카메라 추적 | 탑다운 시점에서 플레이어 추적 | `Assets/Scripts/Camera/` |
+| F-01 | 터치 가상 조이스틱 | 터치 드래그 방향을 이동 입력으로 전달 | `Assets/Scripts/Player/` |
+| F-02 | 플레이어 이동 | 조이스틱/WASD 입력으로 플레이어 이동 | `Assets/Scripts/Player/` |
+| F-03 | 플레이어 애니메이션 | 이동 상태별 애니메이션, 좌우 반전 | `Assets/Scripts/Player/` |
+| F-04 | 카메라 추적 | 비스듬한 탑다운 시점에서 플레이어 추적 | `Assets/Scripts/Camera/` |
