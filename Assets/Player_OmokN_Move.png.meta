@@ -121,7 +121,139 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Player_OmokN_Move_0
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 9
+        width: 172
+        height: 172
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ab2a997b25fe0450800000000000000
+      internalID: 6057048115932441509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_OmokN_Move_1
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 9
+        width: 171
+        height: 171
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 081a1c4add9537b50800000000000000
+      internalID: 6589709488259965312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_OmokN_Move_2
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 9
+        width: 172
+        height: 172
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46cb647b98fbf8130800000000000000
+      internalID: 3571283627734383716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_OmokN_Move_3
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 9
+        width: 172
+        height: 171
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f8f6d677df10a300800000000000000
+      internalID: 261243788659718392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_OmokN_Move_4
+      rect:
+        serializedVersion: 2
+        x: 906
+        y: 10
+        width: 174
+        height: 170
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b36eb630263b7900800000000000000
+      internalID: 683199280462062515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_OmokN_Move_5
+      rect:
+        serializedVersion: 2
+        x: 1122
+        y: 8
+        width: 173
+        height: 172
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba22c1f911d4fb810800000000000000
+      internalID: 1783228715541209771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -135,7 +267,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Player_OmokN_Move_0: 6057048115932441509
+      Player_OmokN_Move_1: 6589709488259965312
+      Player_OmokN_Move_2: 3571283627734383716
+      Player_OmokN_Move_3: 261243788659718392
+      Player_OmokN_Move_4: 683199280462062515
+      Player_OmokN_Move_5: 1783228715541209771
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
