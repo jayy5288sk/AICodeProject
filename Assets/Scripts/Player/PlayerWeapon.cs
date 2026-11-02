@@ -9,6 +9,7 @@ public class PlayerWeapon : MonoBehaviour
     private const float FLIPPED_SCALE_Y = -1f;
 
     [SerializeField] private PlayerMovement _playerMovement;
+    [SerializeField] private PlayerAutoAttack _playerAutoAttack;
     [SerializeField] private SpriteRenderer _weaponRenderer;
     [SerializeField] private Transform _muzzlePoint;
     // 플레이어 스프라이트와 같은 기울기(카메라 각도)로 무기를 눕힌다.
@@ -18,7 +19,7 @@ public class PlayerWeapon : MonoBehaviour
     private Vector3 _lastAimDirection;
     private Sprite _currentSprite;
 
-    // 총알이 생성될 위치 (이후 사격 기능에서 사용)
+    // 총알이 생성될 위치 (PlayerAutoAttack에서 사용)
     public Transform MuzzlePoint => _muzzlePoint;
 
     private void Awake()
@@ -34,8 +35,8 @@ public class PlayerWeapon : MonoBehaviour
             AlignMuzzleToSprite();
         }
 
-        // 임시 조준 방향: 이동 방향. 정지 중이거나 방향이 같으면 마지막 조준을 유지한다.
-        Vector3 aimDirection = _playerMovement.MoveDirection;
+        // 정지 중(타겟 없음)이거나 방향이 같으면 마지막 조준을 유지한다.
+        Vector3 aimDirection = GetAimDirection();
         if (aimDirection == Vector3.zero || aimDirection == _lastAimDirection)
         {
             return;
@@ -48,6 +49,21 @@ public class PlayerWeapon : MonoBehaviour
     private void CacheComponents()
     {
         _weaponGraphic = _weaponRenderer.transform;
+    }
+
+    // 타겟이 있으면 타겟 방향, 없으면 이동 방향을 조준한다.
+    private Vector3 GetAimDirection()
+    {
+        Collider target = _playerAutoAttack.CurrentTarget;
+        if (target == null)
+        {
+            return _playerMovement.MoveDirection;
+        }
+
+        // 높이 차이는 무시하고 XZ 평면의 방향만 사용한다.
+        Vector3 toTarget = target.bounds.center - transform.position;
+        toTarget.y = 0f;
+        return toTarget.normalized;
     }
 
     private void AimAt(Vector3 direction)
