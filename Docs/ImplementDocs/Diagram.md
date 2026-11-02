@@ -1,5 +1,5 @@
 # 구현 다이어그램
-> 구현마다 최신화하여 갱신한다. (최종 갱신: 2026-11-02, `261102FeatEnemy`)
+> 구현마다 최신화하여 갱신한다. (최종 갱신: 2026-11-02, `261102FeatBullet`)
 
 ```mermaid
 flowchart TD
@@ -20,6 +20,8 @@ flowchart TD
     subgraph CombatGroup["전투"]
         AutoAttack["PlayerAutoAttack<br/>───<br/>Update();<br/>FindNearestEnemy();<br/>Fire();<br/>CurrentTarget"]
         Bullet["ObjectPool / Bullet<br/>───<br/>Launch();<br/>FixedUpdate();<br/>OnTriggerEnter();<br/>ReleaseToPool();"]
+        Spawner["PaintSplatSpawner<br/>───<br/>SpawnOnGround();<br/>SpawnOnBody();"]
+        PaintSplat["ObjectPool / PaintSplat<br/>───<br/>Play();<br/>Update();<br/>ApplyProgress();"]
     end
 
     subgraph EnemyGroup["적"]
@@ -38,6 +40,9 @@ flowchart TD
     AutoAttack -->|CurrentTarget| Weapon
     Weapon -->|MuzzlePoint| AutoAttack
     AutoAttack -->|Get / Launch| Bullet
+    AutoAttack -->|Spawner 전달| Bullet
     Bullet -->|TakeDamage| EnemyHealth
+    Bullet -->|SpawnOnBody / SpawnOnGround| Spawner
+    Spawner -->|Get / Play| PaintSplat
     EnemyHealth -->|OnHealthChanged| EnemyHealthBar
 ```

@@ -255,8 +255,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 0.85, a: 0.9}
-      key1: {r: 1, g: 0.75, b: 0.2, a: 0}
+      key0: {r: 1, g: 0.15, b: 0.15, a: 0.9}
+      key1: {r: 1, g: 0.15, b: 0.15, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -311,7 +311,7 @@ MonoBehaviour:
   _trailRenderer: {fileID: 5714757338717139357}
   _moveSpeed: 8
   _damage: 20
-  _lifeTime: 3
+  _lifeTime: 2
   _blinkSpeed: 20
-  _brightColor: {r: 1, g: 1, b: 1, a: 1}
-  _dimColor: {r: 1, g: 0.8, b: 0.2, a: 0.5}
+  _brightColor: {r: 1, g: 0.15, b: 0.15, a: 1}
+  _dimColor: {r: 0.7, g: 0, b: 0, a: 0.6}

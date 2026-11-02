@@ -10,6 +10,8 @@ public class PlayerAutoAttack : MonoBehaviour
 
     [SerializeField] private PlayerWeapon _playerWeapon;
     [SerializeField] private Bullet _bulletPrefab;
+    // 탄환이 사라질 때 물감 자국을 찍어 줄 스포너 (탄환 생성 시 전달)
+    [SerializeField] private PaintSplatSpawner _paintSplatSpawner;
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private float _attackRange = 6f;
     [SerializeField] private float _fireInterval = 1f;
@@ -80,7 +82,7 @@ public class PlayerAutoAttack : MonoBehaviour
     private Bullet CreateBullet()
     {
         Bullet bullet = Instantiate(_bulletPrefab);
-        bullet.Initialize(_bulletPool.Release);
+        bullet.Initialize(_bulletPool.Release, _paintSplatSpawner);
         return bullet;
     }
 
