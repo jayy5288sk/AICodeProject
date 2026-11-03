@@ -1,27 +1,27 @@
 # 구현 다이어그램
-> 구현마다 최신화하여 갱신한다. (최종 갱신: 2026-11-02, `261102FeatBullet`)
+> 구현마다 최신화하여 갱신한다. (최종 갱신: 2026-11-03, `#45 Update 로직 함수 분리`)
 
 ```mermaid
 flowchart TD
     subgraph InputGroup["입력"]
         Input["PlayerControls<br/>(InputActions)<br/>───<br/>Move / TouchPress / TouchPosition"]
-        Joystick["FloatingJoystick<br/>───<br/>OnTouchStarted();<br/>OnTouchCanceled();<br/>Direction"]
+        Joystick["FloatingJoystick<br/>───<br/>Update();<br/>UpdateDirection();<br/>OnTouchStarted();<br/>OnTouchCanceled();<br/>Direction"]
     end
 
     subgraph PlayerGroup["플레이어"]
-        Movement["PlayerMovement<br/>───<br/>Update();<br/>FixedUpdate();<br/>MoveDirection / IsMoving"]
+        Movement["PlayerMovement<br/>───<br/>Update();<br/>ReadMoveInput();<br/>FixedUpdate();<br/>ApplyMoveVelocity();<br/>MoveDirection / IsMoving"]
         Body["Rigidbody<br/>───<br/>linearVelocity"]
-        Animation["PlayerAnimation<br/>───<br/>Update();<br/>Animator.SetBool(IsMoving);<br/>SpriteRenderer.flipX"]
-        Camera["CameraFollow<br/>───<br/>LateUpdate();"]
-        Weapon["PlayerWeapon<br/>───<br/>Update();<br/>GetAimDirection();<br/>AimAt();<br/>AlignMuzzleToSprite();<br/>MuzzlePoint"]
+        Animation["PlayerAnimation<br/>───<br/>Update();<br/>UpdateMoveAnimation();<br/>UpdateFacing();<br/>Animator.SetBool(IsMoving);<br/>SpriteRenderer.flipX"]
+        Camera["CameraFollow<br/>───<br/>LateUpdate();<br/>FollowTarget();"]
+        Weapon["PlayerWeapon<br/>───<br/>Update();<br/>UpdateMuzzle();<br/>UpdateAim();<br/>GetAimDirection();<br/>AimAt();<br/>AlignMuzzleToSprite();<br/>MuzzlePoint"]
         WeaponGraphic["WeaponGraphic<br/>───<br/>SpriteRenderer<br/>localScale.y 반전"]
     end
 
     subgraph CombatGroup["전투"]
-        AutoAttack["PlayerAutoAttack<br/>───<br/>Update();<br/>FindNearestEnemy();<br/>Fire();<br/>CurrentTarget"]
-        Bullet["ObjectPool / Bullet<br/>───<br/>Launch();<br/>FixedUpdate();<br/>OnTriggerEnter();<br/>ReleaseToPool();"]
+        AutoAttack["PlayerAutoAttack<br/>───<br/>Update();<br/>FindNearestEnemy();<br/>UpdateFireTimer();<br/>TryFire();<br/>Fire();<br/>CurrentTarget"]
+        Bullet["ObjectPool / Bullet<br/>───<br/>Launch();<br/>Update();<br/>UpdateBlink();<br/>FixedUpdate();<br/>TryExpire();<br/>MoveTowardTarget();<br/>OnTriggerEnter();<br/>ReleaseToPool();"]
         Spawner["PaintSplatSpawner<br/>───<br/>SpawnOnGround();<br/>SpawnOnBody();"]
-        PaintSplat["ObjectPool / PaintSplat<br/>───<br/>Play();<br/>Update();<br/>ApplyProgress();"]
+        PaintSplat["ObjectPool / PaintSplat<br/>───<br/>Play();<br/>Update();<br/>UpdateProgress();<br/>ApplyProgress();"]
     end
 
     subgraph EnemyGroup["적"]

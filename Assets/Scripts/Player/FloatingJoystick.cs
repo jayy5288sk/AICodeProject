@@ -35,6 +35,12 @@ public class FloatingJoystick : MonoBehaviour
 
     private void Update()
     {
+        UpdateDirection();
+    }
+
+    // 누르고 있는 동안 시작 지점 기준 드래그 방향을 계산한다.
+    private void UpdateDirection()
+    {
         if (!_touchPressAction.action.IsPressed())
         {
             return;

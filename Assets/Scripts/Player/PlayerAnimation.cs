@@ -13,13 +13,23 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Update()
     {
+        UpdateMoveAnimation();
+        UpdateFacing();
+    }
+
+    // 이동 상태가 바뀔 때만 Animator 값을 갱신한다.
+    private void UpdateMoveAnimation()
+    {
         bool isMoving = _playerMovement.IsMoving;
         if (isMoving != _wasMoving)
         {
             _animator.SetBool(IS_MOVING_HASH, isMoving);
             _wasMoving = isMoving;
         }
+    }
 
+    private void UpdateFacing()
+    {
         // 좌우 입력이 있을 때만 방향을 바꾸고, 위/아래 이동 시에는 마지막 방향을 유지한다.
         float horizontal = _playerMovement.MoveDirection.x;
         if (horizontal != 0f)

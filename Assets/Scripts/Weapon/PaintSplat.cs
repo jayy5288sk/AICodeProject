@@ -33,6 +33,12 @@ public class PaintSplat : MonoBehaviour
 
     private void Update()
     {
+        UpdateProgress();
+    }
+
+    // 경과 시간에 따라 진행도를 반영하고, 끝나면 풀로 돌아간다.
+    private void UpdateProgress()
+    {
         _elapsedTime += Time.deltaTime;
         float progress = Mathf.Clamp01(_elapsedTime / _duration);
         ApplyProgress(progress);

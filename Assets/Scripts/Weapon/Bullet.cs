@@ -46,12 +46,28 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
+        UpdateBlink();
+    }
+
+    private void FixedUpdate()
+    {
+        if (TryExpire())
+        {
+            return;
+        }
+
+        MoveTowardTarget();
+    }
+
+    private void UpdateBlink()
+    {
         // Sin 값(-1 ~ 1)을 0 ~ 1로 바꿔 두 색 사이를 오간다.
         float blinkRatio = (Mathf.Sin(Time.time * _blinkSpeed) + 1f) * 0.5f;
         _spriteRenderer.color = Color.Lerp(_dimColor, _brightColor, blinkRatio);
     }
 
-    private void FixedUpdate()
+    // 수명을 누적하고, 만료되었으면 바닥에 자국을 남기고 풀로 돌아간 뒤 true를 반환한다.
+    private bool TryExpire()
     {
         _elapsedTime += Time.fixedDeltaTime;
 
@@ -60,9 +76,14 @@ public class Bullet : MonoBehaviour
         {
             _paintSplatSpawner.SpawnOnGround(_rigidbody.position);
             ReleaseToPool();
-            return;
+            return true;
         }
 
+        return false;
+    }
+
+    private void MoveTowardTarget()
+    {
         Vector3 direction = (_target.bounds.center - _rigidbody.position).normalized;
         _rigidbody.MovePosition(_rigidbody.position + direction * (_moveSpeed * Time.fixedDeltaTime));
     }
