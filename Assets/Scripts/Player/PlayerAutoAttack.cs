@@ -36,13 +36,22 @@ public class PlayerAutoAttack : MonoBehaviour
     private void Update()
     {
         FindNearestEnemy();
+        UpdateFireTimer();
+        TryFire();
+    }
 
+    private void UpdateFireTimer()
+    {
         // 발사 간격까지만 시간을 쌓아 두어, 타겟이 없다가 생기면 바로 발사한다.
         if (_fireTimer < _fireInterval)
         {
             _fireTimer += Time.deltaTime;
         }
+    }
 
+    // 타겟이 있고 발사 간격이 찼을 때만 발사하고 타이머를 초기화한다.
+    private void TryFire()
+    {
         if (CurrentTarget == null || _fireTimer < _fireInterval)
         {
             return;

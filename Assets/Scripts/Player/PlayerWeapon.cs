@@ -29,12 +29,21 @@ public class PlayerWeapon : MonoBehaviour
 
     private void Update()
     {
+        UpdateMuzzle();
+        UpdateAim();
+    }
+
+    private void UpdateMuzzle()
+    {
         // 스프라이트가 교체되었을 때만 총구 위치를 다시 맞춘다.
         if (_weaponRenderer.sprite != _currentSprite)
         {
             AlignMuzzleToSprite();
         }
+    }
 
+    private void UpdateAim()
+    {
         // 정지 중(타겟 없음)이거나 방향이 같으면 마지막 조준을 유지한다.
         Vector3 aimDirection = GetAimDirection();
         if (aimDirection == Vector3.zero || aimDirection == _lastAimDirection)
@@ -55,6 +64,7 @@ public class PlayerWeapon : MonoBehaviour
     private Vector3 GetAimDirection()
     {
         Collider target = _playerAutoAttack.CurrentTarget;
+        
         if (target == null)
         {
             return _playerMovement.MoveDirection;
