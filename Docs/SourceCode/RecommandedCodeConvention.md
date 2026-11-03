@@ -4,6 +4,7 @@
 - 대량 오브젝트는 오브젝트 풀링(`ObjectPool<T>` 또는 자체 풀)으로 비활성화 후 재사용
 - 인터페이스, 직접 참조, C# `event`/`Action`/`UnityEvent` 등 타입 안전한 호출 사용 (문자열이 필요하면 `nameof()` 활용)
 - Update()에서는 GC 할당 없이 처리: 값이 바뀔 때만 갱신
+- Update() 단에서 처리하는 것에 대해서 함수로 캐싱하여 사용
 - `StringBuilder` 재사용, 배열·리스트 재사용, `NonAlloc` API를 사용하여 콜라이더에 대한 충돌 검사
 - 의존성 주입(인스펙터·생성자·Dependecy Injection 컨테이너), 이벤트/메시지 버스, ScriptableObject 기반 데이터·이벤트 채널로 느슨한 결합 유지 (싱글톤은 정말 전역인 소수 서비스에만 제한적으로 사용)
 - 물리 로직은 FixedUpdate()에서 처리하고, 입력은 Update()에서 받아 FixedUpdate()에 전달
