@@ -33,6 +33,16 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         // 입력은 Update에서 읽고, 물리 이동은 FixedUpdate에서 처리한다.
+        ReadMoveInput();
+    }
+
+    private void FixedUpdate()
+    {
+        ApplyMoveVelocity();
+    }
+
+    private void ReadMoveInput()
+    {
         Vector2 input = _joystick.Direction;
         if (input == Vector2.zero)
         {
@@ -43,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         MoveDirection = new Vector3(input.x, 0f, input.y);
     }
 
-    private void FixedUpdate()
+    private void ApplyMoveVelocity()
     {
         // 낙하 속도(y)는 유지하고 수평 속도만 입력에 맞게 설정한다.
         Vector3 horizontalVelocity = MoveDirection * _moveSpeed;

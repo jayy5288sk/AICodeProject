@@ -9,6 +9,11 @@ public class CameraFollow : MonoBehaviour
     private void LateUpdate()
     {
         // 대상의 이동이 끝난 뒤 위치를 맞추기 위해 LateUpdate에서 처리한다.
+        FollowTarget();
+    }
+
+    private void FollowTarget()
+    {
         transform.position = _target.position + _offset;
     }
 }
