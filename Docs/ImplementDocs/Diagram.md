@@ -1,16 +1,18 @@
 # 구현 다이어그램
-> 구현마다 최신화하여 갱신한다. (최종 갱신: 2026-11-03, `#45 Update 로직 함수 분리`)
+> 구현마다 최신화하여 갱신한다. (최종 갱신: 2026-11-04, `플레이어 점프 구현`)
 
 ```mermaid
 flowchart TD
     subgraph InputGroup["입력"]
-        Input["PlayerControls<br/>(InputActions)<br/>───<br/>Move / TouchPress / TouchPosition"]
+        Input["PlayerControls<br/>(InputActions)<br/>───<br/>Move / TouchPress / TouchPosition / Jump"]
         Joystick["FloatingJoystick<br/>───<br/>Update();<br/>UpdateDirection();<br/>OnTouchStarted();<br/>OnTouchCanceled();<br/>Direction"]
     end
 
     subgraph PlayerGroup["플레이어"]
         Movement["PlayerMovement<br/>───<br/>Update();<br/>ReadMoveInput();<br/>FixedUpdate();<br/>ApplyMoveVelocity();<br/>MoveDirection / IsMoving"]
         Body["Rigidbody<br/>───<br/>linearVelocity"]
+        Jump["PlayerJump<br/>───<br/>Update();<br/>ReadJumpInput();<br/>FixedUpdate();<br/>ApplyJump();<br/>IsGrounded();"]
+        GroundCheck["GroundCheck<br/>───<br/>Player 자식 Transform"]
         Animation["PlayerAnimation<br/>───<br/>Update();<br/>UpdateMoveAnimation();<br/>UpdateFacing();<br/>Animator.SetBool(IsMoving);<br/>SpriteRenderer.flipX"]
         Camera["CameraFollow<br/>───<br/>LateUpdate();<br/>FollowTarget();"]
         Weapon["PlayerWeapon<br/>───<br/>Update();<br/>UpdateMuzzle();<br/>UpdateAim();<br/>GetAimDirection();<br/>AimAt();<br/>AlignMuzzleToSprite();<br/>MuzzlePoint"]
@@ -29,6 +31,8 @@ flowchart TD
         EnemyHealthBar["EnemyHealthBar<br/>───<br/>UpdateGauge();<br/>Image.fillAmount"]
     end
 
+    GroundLayer["Ground 레이어<br/>───<br/>바닥 오브젝트"]
+
     Input -->|TouchPress, TouchPosition| Joystick
     Input -->|Move| Movement
     Joystick -->|Direction| Movement
@@ -45,4 +49,8 @@ flowchart TD
     Bullet -->|SpawnOnBody / SpawnOnGround| Spawner
     Spawner -->|Get / Play| PaintSplat
     EnemyHealth -->|OnHealthChanged| EnemyHealthBar
+    Input -->|Jump| Jump
+    Jump -->|위치 기준| GroundCheck
+    GroundCheck -.->|CheckSphere 땅 판정| GroundLayer
+    Jump -->|linearVelocity.y 설정| Body
 ```
