@@ -35,4 +35,10 @@
 - @\Docs\SourceCode\AntiCodeConvention.md
 - @\Docs\SourceCode\RecommandedCodeConvention.md
 
+### 개발 / 검수 위임 시
+- 승인된 브리핑의 코드 작업은 `developer` 서브 에이전트(`.claude\agents\developer.md`)에 위임할 수 있다.
+- 코드 산출물의 사전 검수는 `reviewer` 서브 에이전트(`.claude\agents\reviewer.md`)에 위임한다.
+
 ### 기술문서 작성 시
+- 사용자가 문서 반영을 승인하면 기술 문서·다이어그램 작성은 `tech-writer` 서브 에이전트(`.claude\agents\tech-writer.md`)에 위임할 수 있다.
+- 작성된 기술 문서와 실제 구현의 대조 검수는 `doc-reviewer` 서브 에이전트(`.claude\agents\doc-reviewer.md`)에 위임한다.
