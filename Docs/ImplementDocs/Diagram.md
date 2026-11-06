@@ -1,5 +1,5 @@
 # 구현 다이어그램
-> 구현마다 최신화하여 갱신한다. (최종 갱신: 2026-11-04, `플레이어 점프 구현`)
+> 구현마다 최신화하여 갱신한다. (최종 갱신: 2026-11-04, `탄환 직선·관통 구현`)
 
 ```mermaid
 flowchart TD
@@ -15,13 +15,13 @@ flowchart TD
         GroundCheck["GroundCheck<br/>───<br/>Player 자식 Transform"]
         Animation["PlayerAnimation<br/>───<br/>Update();<br/>UpdateMoveAnimation();<br/>UpdateFacing();<br/>Animator.SetBool(IsMoving);<br/>SpriteRenderer.flipX"]
         Camera["CameraFollow<br/>───<br/>LateUpdate();<br/>FollowTarget();"]
-        Weapon["PlayerWeapon<br/>───<br/>Update();<br/>UpdateMuzzle();<br/>UpdateAim();<br/>GetAimDirection();<br/>AimAt();<br/>AlignMuzzleToSprite();<br/>MuzzlePoint"]
+        Weapon["PlayerWeapon<br/>───<br/>Update();<br/>UpdateMuzzle();<br/>UpdateAim();<br/>GetAimDirection();<br/>AimAt();<br/>AlignMuzzleToSprite();<br/>MuzzlePoint / IsPiercing"]
         WeaponGraphic["WeaponGraphic<br/>───<br/>SpriteRenderer<br/>localScale.y 반전"]
     end
 
     subgraph CombatGroup["전투"]
         AutoAttack["PlayerAutoAttack<br/>───<br/>Update();<br/>FindNearestEnemy();<br/>UpdateFireTimer();<br/>TryFire();<br/>Fire();<br/>CurrentTarget"]
-        Bullet["ObjectPool / Bullet<br/>───<br/>Launch();<br/>Update();<br/>UpdateBlink();<br/>FixedUpdate();<br/>TryExpire();<br/>MoveTowardTarget();<br/>OnTriggerEnter();<br/>ReleaseToPool();"]
+        Bullet["ObjectPool / Bullet<br/>───<br/>Launch();<br/>Update();<br/>UpdateBlink();<br/>FixedUpdate();<br/>TryExpire();<br/>MoveStraight();<br/>OnTriggerEnter();<br/>ReleaseToPool();"]
         Spawner["PaintSplatSpawner<br/>───<br/>SpawnOnGround();<br/>SpawnOnBody();"]
         PaintSplat["ObjectPool / PaintSplat<br/>───<br/>Play();<br/>Update();<br/>UpdateProgress();<br/>ApplyProgress();"]
     end
@@ -42,8 +42,8 @@ flowchart TD
     Movement -->|MoveDirection| Weapon
     Weapon -->|회전, 반전, 총구 정렬| WeaponGraphic
     AutoAttack -->|CurrentTarget| Weapon
-    Weapon -->|MuzzlePoint| AutoAttack
-    AutoAttack -->|Get / Launch| Bullet
+    Weapon -->|MuzzlePoint, IsPiercing| AutoAttack
+    AutoAttack -->|Get / Launch 위치, 방향, 관통| Bullet
     AutoAttack -->|Spawner 전달| Bullet
     Bullet -->|TakeDamage| EnemyHealth
     Bullet -->|SpawnOnBody / SpawnOnGround| Spawner

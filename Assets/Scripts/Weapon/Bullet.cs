@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
 
-// 타겟을 따라가는 페인트볼 유도 탄환. 적에게 닿으면 데미지를 주고 풀로 돌아간다.
+// 발사 시 정해진 방향으로 직선 비행하는 페인트볼 탄환. 적에게 닿으면 데미지를 준다.
+// 비관통 탄환은 첫 적에게 닿으면 풀로 돌아가고, 관통 탄환은 계속 날아가 뒤에 있는 적도 맞힌다.
 // 색과 투명도를 주기적으로 바꿔 반짝이는 느낌을 내고, 잔상은 TrailRenderer가 담당한다.
 // 사라질 때 명중했으면 적 몸통에, 아니면 마지막 위치의 바닥에 물감 자국을 남긴다.
 public class Bullet : MonoBehaviour
@@ -11,7 +12,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private TrailRenderer _trailRenderer;
     [SerializeField] private float _moveSpeed = 8f;
     [SerializeField] private int _damage = 20;
-    // 타겟에 닿지 못했을 때 풀로 돌아가기까지의 시간(초)
+    // 발사 후 풀로 돌아가기까지의 시간(초). 관통 탄환은 이 시간이 지나야 사라진다.
     [SerializeField] private float _lifeTime = 2f;
 
     [Header("반짝임")]
@@ -19,7 +20,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Color _brightColor = new Color(1f, 0.15f, 0.15f, 1f);
     [SerializeField] private Color _dimColor = new Color(0.7f, 0f, 0f, 0.6f);
 
-    private Collider _target;
+    private Vector3 _moveDirection;
+    private bool _isPiercing;
     private float _elapsedTime;
     private bool _isReleased;
     private Action<Bullet> _releaseToPool;
@@ -32,11 +34,12 @@ public class Bullet : MonoBehaviour
         _paintSplatSpawner = paintSplatSpawner;
     }
 
-    public void Launch(Vector3 startPosition, Collider target)
+    public void Launch(Vector3 startPosition, Vector3 direction, bool isPiercing)
     {
         transform.position = startPosition;
         _rigidbody.position = startPosition;
-        _target = target;
+        _moveDirection = direction;
+        _isPiercing = isPiercing;
         _elapsedTime = 0f;
         _isReleased = false;
 
@@ -56,7 +59,7 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        MoveTowardTarget();
+        MoveStraight();
     }
 
     private void UpdateBlink()
@@ -71,8 +74,8 @@ public class Bullet : MonoBehaviour
     {
         _elapsedTime += Time.fixedDeltaTime;
 
-        // 타겟이 사망(비활성화)했거나 수명이 지나면 풀로 돌아간다.
-        if (!_target.gameObject.activeInHierarchy || _elapsedTime >= _lifeTime)
+        // 타겟의 생존 여부와 관계없이 수명이 지나면 풀로 돌아간다.
+        if (_elapsedTime >= _lifeTime)
         {
             _paintSplatSpawner.SpawnOnGround(_rigidbody.position);
             ReleaseToPool();
@@ -82,10 +85,10 @@ public class Bullet : MonoBehaviour
         return false;
     }
 
-    private void MoveTowardTarget()
+    // 발사 시 저장한 방향으로만 이동한다. (타겟을 따라가지 않음)
+    private void MoveStraight()
     {
-        Vector3 direction = (_target.bounds.center - _rigidbody.position).normalized;
-        _rigidbody.MovePosition(_rigidbody.position + direction * (_moveSpeed * Time.fixedDeltaTime));
+        _rigidbody.MovePosition(_rigidbody.position + _moveDirection * (_moveSpeed * Time.fixedDeltaTime));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -95,7 +98,7 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        // 같은 물리 프레임에 여러 적과 닿아도 데미지는 한 번만 준다.
+        // 이미 풀로 돌아간 탄환은 같은 물리 프레임에 다른 적과 닿아도 처리하지 않는다.
         if (_isReleased)
         {
             return;
@@ -104,6 +107,13 @@ public class Bullet : MonoBehaviour
         enemyHealth.TakeDamage(_damage);
         // 적 콜라이더 중심(몸통)에 물감 자국을 남긴다.
         _paintSplatSpawner.SpawnOnBody(other.bounds.center);
+
+        // 관통 탄환은 풀로 돌아가지 않고 계속 날아간다.
+        if (_isPiercing)
+        {
+            return;
+        }
+
         ReleaseToPool();
     }
 

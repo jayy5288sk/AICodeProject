@@ -84,8 +84,21 @@ public class PlayerAutoAttack : MonoBehaviour
 
     private void Fire()
     {
+        bool isPiercing = _playerWeapon.IsPiercing;
+        Vector3 targetCenter = CurrentTarget.bounds.center;
+        Vector3 startPosition = _playerWeapon.MuzzlePoint.position;
+
+        // 관통 탄환은 타겟 몸통 높이에서 출발시켜, 뒤에 있는 적까지 같은 높이로 수평 비행하게 한다.
+        if (isPiercing)
+        {
+            startPosition.y = targetCenter.y;
+        }
+
+        // 방향은 발사 시점에 한 번만 정하고, 탄환은 그 방향으로 직선 이동한다.
+        Vector3 direction = (targetCenter - startPosition).normalized;
+
         Bullet bullet = _bulletPool.Get();
-        bullet.Launch(_playerWeapon.MuzzlePoint.position, CurrentTarget);
+        bullet.Launch(startPosition, direction, isPiercing);
     }
 
     private Bullet CreateBullet()
