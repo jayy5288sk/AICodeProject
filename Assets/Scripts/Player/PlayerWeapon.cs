@@ -14,6 +14,8 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private Transform _muzzlePoint;
     // 플레이어 스프라이트와 같은 기울기(카메라 각도)로 무기를 눕힌다.
     [SerializeField] private float _tiltAngle = 45f;
+    // 켜면 탄환이 적을 맞혀도 사라지지 않고 뒤에 있는 적까지 관통한다.
+    [SerializeField] private bool _isPiercing;
 
     private Transform _weaponGraphic;
     private Vector3 _lastAimDirection;
@@ -21,6 +23,8 @@ public class PlayerWeapon : MonoBehaviour
 
     // 총알이 생성될 위치 (PlayerAutoAttack에서 사용)
     public Transform MuzzlePoint => _muzzlePoint;
+    // 이 무기의 탄환이 적을 관통하는지 여부 (PlayerAutoAttack에서 사용)
+    public bool IsPiercing => _isPiercing;
 
     private void Awake()
     {
